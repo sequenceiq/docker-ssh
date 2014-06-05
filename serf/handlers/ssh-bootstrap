@@ -1,0 +1,19 @@
+#!/bin/bash -x
+LOGFILE=/tmp/ssh.log
+EVENT_LOG=/tmp/serf-ssh-$(date +%Y%m%d-%H%M).log
+
+cat > $EVENT_LOG
+
+if [[ "member-join" == "$SERF_EVENT" ]] && grep "$SERF_SELF_NAME" $EVENT_LOG ; then
+
+  /etc/init.d/sshd start
+
+  if [ -n "$KEYCHAIN" ]; then
+
+    #non-root:
+    # curl -s ssh.keychain.io/$KEYCHAIN/install | bash
+
+    curl -L keychain.io/$KEYCHAIN >> /root/.ssh/authorized_keys
+  fi
+
+fi

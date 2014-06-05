@@ -1,0 +1,5 @@
+{
+  "event_handlers": [
+    "member-join=/usr/local/serf/handlers/ssh-bootstrap"
+  ]
+}
